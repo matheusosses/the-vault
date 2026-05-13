@@ -5,6 +5,8 @@ import br.com.matheusosses.the_vault.models.game.dto.NewGameDto;
 import br.com.matheusosses.the_vault.models.game.dto.UpdateGameDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +26,10 @@ public class GameService {
     }
 
     @Transactional(readOnly = true)
-    public List<GameDto> listar(){
-        return repository.findAll().stream()
-            .map(mapper::toDto)
-            .toList();
+    public Page<GameDto> listar(Pageable pag){
+        return repository.findAll(pag)
+            .map(mapper::toDto);
+
     }
 
     @Transactional(readOnly = true)
