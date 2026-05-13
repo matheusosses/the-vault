@@ -1,7 +1,7 @@
-package br.com.matheusosses.the_vault.game.dto;
+package br.com.matheusosses.the_vault.models.game.dto;
 
-import br.com.matheusosses.the_vault.game.GameCategory;
-import br.com.matheusosses.the_vault.infra.validation.CurrenYearOrPast;
+import br.com.matheusosses.the_vault.models.game.GameCategory;
+import br.com.matheusosses.the_vault.infra.validation.CurrentYearOrPast;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +18,6 @@ public record NewGameDto(
     GameCategory category,
 
     @NotNull(message = "O ano de lançamento é obrigatório")
-    @CurrenYearOrPast
+    @CurrentYearOrPast
     Integer releaseYear) {
 }

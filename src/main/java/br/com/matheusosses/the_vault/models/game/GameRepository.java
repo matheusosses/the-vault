@@ -1,4 +1,4 @@
-package br.com.matheusosses.the_vault.game;
+package br.com.matheusosses.the_vault.models.game;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

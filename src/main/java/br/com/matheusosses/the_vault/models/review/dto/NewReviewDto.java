@@ -1,4 +1,4 @@
-package br.com.matheusosses.the_vault.review.dto;
+package br.com.matheusosses.the_vault.models.review.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

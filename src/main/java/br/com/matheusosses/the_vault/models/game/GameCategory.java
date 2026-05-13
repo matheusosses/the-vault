@@ -1,4 +1,4 @@
-package br.com.matheusosses.the_vault.game;
+package br.com.matheusosses.the_vault.models.game;
 
 public enum GameCategory {
     ABSTRACT,

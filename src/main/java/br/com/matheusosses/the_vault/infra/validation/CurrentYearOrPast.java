@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {CurrentYearOrPastValidator.class})
 @Documented
-public @interface CurrenYearOrPast {
+public @interface CurrentYearOrPast {
     String message() default "O ano não pode ser maior que o atual";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

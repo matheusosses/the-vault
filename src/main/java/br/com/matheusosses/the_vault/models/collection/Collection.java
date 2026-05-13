@@ -1,4 +1,4 @@
-package br.com.matheusosses.the_vault.collection;
+package br.com.matheusosses.the_vault.models.collection;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

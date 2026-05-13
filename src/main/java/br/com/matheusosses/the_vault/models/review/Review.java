@@ -1,4 +1,4 @@
-package br.com.matheusosses.the_vault.review;
+package br.com.matheusosses.the_vault.models.review;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

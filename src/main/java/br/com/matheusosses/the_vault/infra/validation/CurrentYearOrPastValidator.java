@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.time.LocalDate;
 
-public class CurrentYearOrPastValidator implements ConstraintValidator<CurrenYearOrPast, Integer> {
+public class CurrentYearOrPastValidator implements ConstraintValidator<CurrentYearOrPast, Integer> {
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
         if (value == null) return true;
