@@ -6,10 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record NewReviewDto(
-    @NotNull(message = "O ID do jogo é obrigatório")
-    Long gameId,
-
-    @NotNull(message = "A nota é obrigatória")
+@NotNull(message = "A nota é obrigatória")
     @Min(value = 1, message = "A nota mínima é 1")
     @Max(value = 5, message = "A nota máxima é 5")
     Integer score,

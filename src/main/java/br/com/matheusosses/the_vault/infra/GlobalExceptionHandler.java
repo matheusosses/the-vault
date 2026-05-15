@@ -75,4 +75,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.internalServerError().body(error);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
+        var error = new StandardError(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Requisição Inválida",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
+
+        return ResponseEntity.badRequest().body(error);
+    }
 }
