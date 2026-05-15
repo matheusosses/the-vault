@@ -1,12 +1,13 @@
 package br.com.matheusosses.the_vault.models.collection;
 
+import br.com.matheusosses.the_vault.models.game.Game;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "collections")
@@ -20,11 +21,14 @@ public class Collection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long gameId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDate acquiredAt;
+    private LocalDateTime acquiredAt;
+
+    private LocalDateTime deletedAt;
 }

@@ -1,5 +1,6 @@
 package br.com.matheusosses.the_vault.models.review;
 
+import br.com.matheusosses.the_vault.models.game.Game;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,9 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long gameId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     @Column(nullable = false)
     private Integer score;
@@ -29,5 +31,7 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    private LocalDateTime deletedAt;
 }
