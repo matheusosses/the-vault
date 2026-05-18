@@ -6,11 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "collections")
+@SQLDelete(sql = "UPDATE collections SET deleted_at = NOW() WHERE id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,14 +28,22 @@ public class Collection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
-    private Game game;
+    private String name;
+
+    @ManyToMany
+    @JoinTable(
+        name = "collection_games",
+        joinColumns = @JoinColumn(name = "collection_id"),
+        inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
+    private Set<Game> games = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime acquiredAt;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     private LocalDateTime deletedAt;
 }
