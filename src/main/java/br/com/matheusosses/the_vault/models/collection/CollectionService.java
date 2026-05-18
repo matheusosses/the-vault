@@ -6,6 +6,8 @@ import br.com.matheusosses.the_vault.models.game.Game;
 import br.com.matheusosses.the_vault.models.game.GameRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,18 @@ public class CollectionService {
     public CollectionDto criar(NewCollectionDto dto) {
         Collection collection = mapper.toEntity(dto);
         return mapper.toDto(repository.save(collection));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CollectionDto> listar(Pageable pag) {
+        return repository.findAll(pag).map(mapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public CollectionDto detalhar(Long id) {
+        return repository.findById(id)
+            .map(mapper::toDto)
+            .orElseThrow(() -> new EntityNotFoundException("Coleção não encontrada"));
     }
 
     @Transactional
