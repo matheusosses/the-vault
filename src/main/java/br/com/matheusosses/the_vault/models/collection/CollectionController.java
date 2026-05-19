@@ -1,6 +1,5 @@
-package br.com.matheusosses.the_vault.models;
+package br.com.matheusosses.the_vault.models.collection;
 
-import br.com.matheusosses.the_vault.models.collection.CollectionService;
 import br.com.matheusosses.the_vault.models.collection.dto.CollectionDto;
 import br.com.matheusosses.the_vault.models.collection.dto.NewCollectionDto;
 import jakarta.validation.Valid;
