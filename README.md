@@ -73,45 +73,56 @@ Abaixo estão listadas as principais rotas expostas pela aplicação. Todas as r
 
 ## 📦 Como Configurar e Rodar o Projeto Localmente
 
-### Pré-requisitos
-* Java 21 JDK instalado.
-* Maven 3.x instalado.
-* Servidor MySQL rodando localmente (ou via Docker).
+O projeto está preparado para rodar de forma isolada e automatizada utilizando containers, o que garante que a aplicação funcionará em qualquer ambiente de desenvolvimento.
 
-### 1. Configuração dos Segredos Locais
-Crie um arquivo chamado `application-secret.properties` dentro do diretório `src/main/resources/`:
+### Opção 1: Rodando com Docker (Recomendado)
+
+**Pré-requisitos:** Docker e Docker Desktop/Engine instalados.
+
+1. Clone o repositório para a sua máquina.
+2. Abra o terminal na raiz do projeto e execute o comando:
+   ```bash
+   docker compose up --build
+   ```
+3. O Docker fará o download do MySQL, compilará a aplicação Java, rodará as migrações do Flyway e subirá a API.
+4. A API estará disponível em `http://localhost:8080`.
+
+*(Nota: O banco de dados e a API já estarão conectados através de uma rede interna do Docker, sem necessidade de configurações adicionais de senha).*
+
+---
+
+### Opção 2: Rodando Manualmente (Sem Docker)
+
+**Pré-requisitos:** Java 21 JDK, Maven 3.x e servidor MySQL local rodando na porta 3306.
+
+1. Crie um arquivo chamado `application-secret.properties` dentro do diretório `src/main/resources/`:
 
 ```properties
 # Configuração de credenciais do seu banco de dados local
-spring.datasource.url=jdbc:mysql://localhost:3606/the_vault_db?createDatabaseIfNotExist=true
+spring.datasource.url=jdbc:mysql://localhost:3306/the_vault_db?createDatabaseIfNotExist=true
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 
-# Chave mestra de assinatura do JWT (Troque por uma frase longa em produção)
+# Chave mestra de assinatura do JWT
 api.security.token.secret=MinhaChaveSecretaSuperProtegidaDoTheVault123!
 ```
 
-### 2. Criação do Usuário Inicial Administrador
-Como a API está trancada por padrão, você precisará injetar o primeiro usuário administrador diretamente no seu cliente de banco de dados (TablePlus, DBeaver, etc.) para conseguir gerar o primeiro token. Execute o seguinte comando SQL:
+2. Execute os seguintes comandos na raiz do projeto:
+```bash
+mvn clean package
+mvn spring-boot:run
+```
+
+---
+
+### 🔑 Criação do Usuário Inicial Administrador
+Como a API é protegida por JWT, após subir a aplicação (seja via Docker ou manualmente), você precisará criar o primeiro administrador diretamente no banco de dados para conseguir fazer o login. Conecte-se ao banco `the_vault_db` e execute:
 
 ```sql
 INSERT INTO users (login, password, role) 
 VALUES ('admin@thevault.com', '$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.', 'ADMIN');
 ```
-*Nota: O hash acima corresponde à senha criptografada `123456`.*
-
-### 3. Compilar e Rodar
-Execute os seguintes comandos na raiz do projeto utilizando o terminal:
-
-```bash
-# Limpar compilações antigas e empacotar a aplicação
-mvn clean package
-
-# Iniciar o servidor Spring Boot
-mvn spring-boot:run
-```
-
-A aplicação estará disponível e escutando na porta padrão: `http://localhost:8080`.
+*(A senha para este hash é `123456`).*
 
 ---
 
