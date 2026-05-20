@@ -1,10 +1,9 @@
 package br.com.matheusosses.the_vault;
 
+import br.com.matheusosses.the_vault.support.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class TheVaultApplicationTests {
+class TheVaultApplicationTests extends AbstractIntegrationTest {
 
 	@Test
 	void contextLoads() {
